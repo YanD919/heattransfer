@@ -18,18 +18,39 @@ solvers
 {
     p_rgh
     {
-        solver           GAMG;
-        tolerance        1e-7;
+        solver           PCG;
+        preconditioner   DIC;
         relTol           0.01;
+	relTol           0.01;
         smoother         DICGaussSeidel;
     }
 
-    "(U|h|k|epsilon|omega)"
+    "rho.*"
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       0;
+        relTol          0;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        relTol          0;
+    }
+
+    "(U|h|e|k|epsilon|omega|R)"
     {
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-8;
         relTol          0.1;
+    }
+
+    "(U|h|e|k|epsilon|omega|R)Final"
+    {
+        $U;
+        relTol          0;
     }
 }
 
@@ -49,6 +70,16 @@ SIMPLE
         // possibly check turbulence fields
         "(k|epsilon|omega)" 1e-3;
     }
+}
+
+PIMPLE
+{
+    momentumPredictor yes;
+    nOuterCorrectors 1;
+    nCorrectors     2;
+    nNonOrthogonalCorrectors 0;
+    pRefCell        0;
+    pRefValue       1e5;
 }
 
 relaxationFactors
