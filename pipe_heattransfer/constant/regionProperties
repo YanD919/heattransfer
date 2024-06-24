@@ -16,7 +16,7 @@ FoamFile
 
 regions
 (
-    fluid   (air porous)
+    fluid   (air pipe)
     solid   ()
 );
 
