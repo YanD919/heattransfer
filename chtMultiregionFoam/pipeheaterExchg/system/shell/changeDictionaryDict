@@ -1,0 +1,344 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+boundary
+{
+    outershell
+    {
+        type            wall;
+    }
+    shellend1
+    {
+        type            wall;
+    }
+    shellend2
+    {
+        type            wall;
+    }
+    inletshell
+    {
+        type            wall;
+    }
+    outletshell
+    {
+        type            wall;
+    }
+}
+
+U
+{
+    internalField   uniform (0 0 0);
+
+    boundaryField
+    {
+	".*"
+        {
+            type            noSlip;
+        }    
+	inlet
+	{
+	    type            flowRateInletVelocity;
+	    volumetricFlowRate constant 2.2e-4;
+	    extrapolateProfile false;
+	    value           $internalField;
+	}
+        outlet
+        {
+            type            zeroGradient;
+        }	
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+T
+{
+    internalField   uniform 300;
+
+    boundaryField
+    {
+	outershell
+        {
+            type            externalWallHeatFluxTemperature;
+            mode            coefficient;             // other modes are "power" and "flux"
+            Ta              uniform 293.15;          // ambient temperature in K
+            thicknessLayers (0.02);                  // this is one 2cm layer insulation
+            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
+            // see http://www.fao.org/3/y5013e/y5013e08.htm
+            // for the values of thernal insulation conductivity
+            kappaMethod     fluidThermo;
+            h               20;
+        }
+        shellend1
+        {
+            type            externalWallHeatFluxTemperature;
+            mode            coefficient;             // other modes are "power" and "flux"
+            Ta              uniform 293.15;          // ambient temperature in K
+            thicknessLayers (0.02);                  // this is one 2cm layer insulation
+            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
+            // see http://www.fao.org/3/y5013e/y5013e08.htm
+            // for the values of thernal insulation conductivity
+            kappaMethod     fluidThermo;
+            h               20;
+        }
+        shellend2
+        {
+            type            externalWallHeatFluxTemperature;
+            mode            coefficient;             // other modes are "power" and "flux"
+            Ta              uniform 293.15;          // ambient temperature in K
+            thicknessLayers (0.02);                  // this is one 2cm layer insulation
+            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
+            // see http://www.fao.org/3/y5013e/y5013e08.htm
+            // for the values of thernal insulation conductivity
+            kappaMethod     fluidThermo;
+            h               20;
+        }
+        inletshell
+        {
+            type            zeroGradient;
+        }
+	outletshell
+        {
+            type            zeroGradient;
+        }
+	inlet
+        {
+            type            fixedValue;
+            value           uniform 293.15;
+        }
+	outlet
+        {
+            type            zeroGradient;
+        }
+        shell_to_copper
+        {
+            type            compressible::turbulentTemperatureCoupledBaffleMixed;
+            Tnbr            T;
+            kappaMethod     fluidThermo;
+            value           uniform 300;
+        }
+	"procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+epsilon
+{
+    // Set the value on all bc to non-zero. Not used in simulation
+    // since zeroGradient; only used in initialisation.
+    internalField   uniform 0.01;
+
+    boundaryField
+    {
+        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            epsilonWallFunction;
+            value           uniform 0.01;
+        }
+	"(inlet|outlet)"
+        {
+            type            calculated;
+            value           $internalField;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+k
+{
+    internalField   uniform 0.1;
+
+    boundaryField
+    {
+        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            kqRWallFunction;
+            value           uniform 0.1;
+        }
+        inlet
+        {
+            type            turbulentIntensityKineticEnergyInlet;
+	    intensity       0.047;
+            value           $internalField;
+	    // turbulent intensity can be estimated:
+	    // https://www.simscale.com/docs/simulation-setup/global-settings/k-epsilon/
+	    // Intensity = 0.16 * Re ^(-1/8)
+	    // Re = Reynold's number based on hydraulic mean diameter
+        }
+	outlet
+        {
+            type            inletOutlet;
+            intensity       $internalField;
+            value           $internalField;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+p_rgh
+{
+    internalField   uniform 1e5;
+
+    boundaryField
+    {
+        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            fixedFluxPressure;
+            value           uniform 1e5;
+        }
+        inletshell
+        {
+            type            fixedFluxPressure;
+            value           $internalField;
+        }
+        outletshell
+        {
+            type            fixedValue;
+            value           uniform 1e5;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+p
+{
+    internalField   uniform 1e5;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            calculated;
+            value           uniform 1e5;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+rho
+{
+    internalField   uniform 1000;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            calculated;
+            value           uniform 1000;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+omega
+{
+    internalField   uniform 0.2;
+
+    boundaryField
+    {
+        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            omegaWallFunction;
+            value           uniform 0.2;
+        }
+        inlet
+        {
+            type            turbulentMixingLengthFrequencyInlet;
+            mixingLength    0.007;
+	    // mixing length estimated here : https://www.simscale.com/docs/simulation-setup/global-settings/k-epsilon/
+	    // mixing length = hydraulic dimater = 0.07
+            value           $internalField;
+        }
+        outlet
+        {
+            type            inletOutlet;
+            intensity       $internalField;
+            value           $internalField;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+alphat
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            calculated;
+            value           $internalField;
+        }
+	"(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            compressible::alphatWallFunction;
+	    Prt             0.85;
+            value           uniform 0;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+nut
+{
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        ".*"
+        {
+            type            calculated;
+            value           $internalField;
+        }
+        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        {
+            type            nutUWallFunction;
+            value           uniform 0;
+        }
+        "procBoundary.*"
+        {
+            type            processor;
+        }
+    }
+}
+
+// ************************************************************************* //

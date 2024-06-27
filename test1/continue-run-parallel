@@ -1,0 +1,10 @@
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+
+
+rm -r log.pimpleFoam
+
+reconstructPar > log.reconstrucrtPar_continuation
+runApplication decomposePar -force
+runParallel pimpleFoam
+runApplication reconstructPar

@@ -1,0 +1,59 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+thermoType
+{
+    type            heSolidThermo;
+    mixture         pureMixture;
+    transport       polynomial;
+    thermo          hpolynomial;
+    equationOfState rhoConst;
+    specie          specie;
+    energy          sensibleEnthalpy;
+}
+
+mixture
+{
+	//this is for copper
+    specie
+    {
+        molWeight       63.546;
+    }
+    thermodynamics
+    {
+        //valid from -23C to 327C
+	
+	Hf              0;
+	Sf              0;
+	//CpCoeffs<8>     ( 186.58 1.492 -0.0042 6e-06 -3e-09 0 0 0 );
+	CpCoeffs<8>     ( 1.8658483803e+02 1.4920474673e+00 -4.1752372544e-03 5.5111636355e-06 -2.7194694879e-09 0 0 0 );
+    }
+    transport
+    {
+	//valid from -23C to 327C
+	
+	muCoeffs<8>     ( 0 0 0 0 0 0 0 0 0 );
+        //kappaCoeffs<8>  ( 454.25 -2.913 0.0005 -3e-07 0 0 0 0 );
+	kappaCoeffs<8>  ( 4.5425094315e+02 -2.912506852e-01 4.7729066389e-04 -3.349088649e-07 0 0 0 0 );
+    }
+    equationOfState
+    {
+	rho             8960;
+    }
+}
+
+
+// ************************************************************************* //

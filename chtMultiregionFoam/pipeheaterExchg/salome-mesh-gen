@@ -1,0 +1,16 @@
+./Allclean
+
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+
+ideasUnvToFoam constant/triSurface/pipeheaterExchg.unv
+splitMeshRegions -cellZones -overwrite
+restore0Dir
+
+transformPoints -scale "(0.001 0.001 0.001)"
+changeDictionary
+//createPatch -overwrite
+//polyDualMesh 75 -overwrite
+touch pipeheaterExchg.foam
+
+

@@ -6,11 +6,11 @@ cd "${0%/*}" || exit                                # Run from this directory
 ./Allrun.pre
 
 runApplication -s air    decomposePar -region air
-runApplication -s porous decomposePar -region porous
+runApplication -s pipe   decomposePar -region pipe
 
 runParallel $(getApplication)
 
 runApplication -s air    reconstructPar -latestTime -region air
-runApplication -s porous reconstructPar -latestTime -region porous
+runApplication -s pipe   reconstructPar -latestTime -region pipe
 
 #------------------------------------------------------------------------------

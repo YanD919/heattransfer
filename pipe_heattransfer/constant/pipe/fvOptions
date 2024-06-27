@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-porousToair
+pipeToair
 {
     type            constantHeatTransfer;
 
@@ -22,7 +22,7 @@ porousToair
     nbrRegion       air;
     master          true;
 
-    nbrModel        airToporous;
+    nbrModel        airTopipe;
     fields          (h);
     semiImplicit    no;
 }

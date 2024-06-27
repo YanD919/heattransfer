@@ -14,15 +14,15 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-airToporous
+airTopipe
 {
     type            constantHeatTransfer;
 
     interpolationMethod cellVolumeWeight;
-    nbrRegion       porous;
+    nbrRegion       pipe;
     master          false;
 
-    nbrModel        porousToair;
+    nbrModel        pipeToair;
     fields          (h);
     semiImplicit    no;
 }
@@ -34,7 +34,7 @@ porosityBlockage
     interRegionExplicitPorositySourceCoeffs
     {
         interpolationMethod cellVolumeWeight;
-        nbrRegion       porous;
+        nbrRegion       pipe;
 
         type            DarcyForchheimer;
 
