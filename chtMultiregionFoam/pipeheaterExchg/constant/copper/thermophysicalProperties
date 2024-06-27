@@ -19,7 +19,7 @@ thermoType
     type            heSolidThermo;
     mixture         pureMixture;
     transport       polynomial;
-    thermo          hpolynomial;
+    thermo          hPolynomial;
     equationOfState rhoConst;
     specie          specie;
     energy          sensibleEnthalpy;

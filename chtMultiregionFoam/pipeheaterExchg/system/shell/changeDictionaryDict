@@ -83,6 +83,7 @@ T
             // for the values of thernal insulation conductivity
             kappaMethod     fluidThermo;
             h               20;
+            value           uniform 300;
         }
         shellend1
         {
@@ -95,6 +96,7 @@ T
             // for the values of thernal insulation conductivity
             kappaMethod     fluidThermo;
             h               20;
+	    value           uniform 300;
         }
         shellend2
         {
@@ -107,6 +109,7 @@ T
             // for the values of thernal insulation conductivity
             kappaMethod     fluidThermo;
             h               20;
+	    value           uniform 300;
         }
         inletshell
         {
@@ -188,7 +191,7 @@ k
 	outlet
         {
             type            inletOutlet;
-            intensity       $internalField;
+            inletValue      $internalField;
             value           $internalField;
         }
         "procBoundary.*"
@@ -209,12 +212,12 @@ p_rgh
             type            fixedFluxPressure;
             value           uniform 1e5;
         }
-        inletshell
+        inlet
         {
             type            fixedFluxPressure;
             value           $internalField;
         }
-        outletshell
+        outlet
         {
             type            fixedValue;
             value           uniform 1e5;
@@ -284,7 +287,7 @@ omega
         outlet
         {
             type            inletOutlet;
-            intensity       $internalField;
+            inletValue      $internalField;
             value           $internalField;
         }
         "procBoundary.*"

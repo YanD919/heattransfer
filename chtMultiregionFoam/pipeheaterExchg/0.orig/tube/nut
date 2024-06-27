@@ -9,40 +9,24 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      turbulenceProperties;
+    class       volScalarField;
+    object      nut;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  LES;
+dimensions      [0 2 -1 0 0 0 0];
 
-LES
+internalField   uniform 0;
+
+boundaryField
 {
-    LESModel        kOmegaSSTIDDES;
+    #includeEtc "caseDicts/setConstraintTypes"
 
-    turbulence      on;
-
-    printCoeffs     on;
-
-    //alphaK1         500;
-
-    delta           IDDESDelta;
-
-    IDDESDeltaCoeffs
+    ".*"
     {
-        hmax           maxDeltaxyzCubeRoot;
-        maxDeltaxyzCubeRootCoeffs
-        {
-        }
+        type    calculated;
+        value   $internalField;
     }
 }
 
-RAS
-{
-    RASModel        kEpsilon;
-
-    turbulence      on;
-
-    printCoeffs     on;
-}
 // ************************************************************************* //

@@ -16,26 +16,6 @@ FoamFile
 
 boundary
 {
-    outershell
-    {
-        type            wall;
-    }
-    shellend1
-    {
-        type            wall;
-    }
-    shellend2
-    {
-        type            wall;
-    }
-    inletshell
-    {
-        type            wall;
-    }
-    outletshell
-    {
-        type            wall;
-    }
 }
 
 U
@@ -44,18 +24,18 @@ U
 
     boundaryField
     {
-	".*"
+	tube_to_copper
         {
             type            noSlip;
         }    
-	inlet
+	tubeend2
 	{
 	    type            flowRateInletVelocity;
 	    volumetricFlowRate constant 2.2e-4;
 	    extrapolateProfile false;
 	    value           $internalField;
 	}
-        outlet
+        tubeend1
         {
             type            zeroGradient;
         }	
@@ -72,65 +52,21 @@ T
 
     boundaryField
     {
-	outershell
-        {
-            type            externalWallHeatFluxTemperature;
-            mode            coefficient;             // other modes are "power" and "flux"
-            Ta              uniform 293.15;          // ambient temperature in K
-            thicknessLayers (0.02);                  // this is one 2cm layer insulation
-            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
-            // see http://www.fao.org/3/y5013e/y5013e08.htm
-            // for the values of thernal insulation conductivity
-            kappaMethod     fluidThermo;
-            h               20;
-        }
-        shellend1
-        {
-            type            externalWallHeatFluxTemperature;
-            mode            coefficient;             // other modes are "power" and "flux"
-            Ta              uniform 293.15;          // ambient temperature in K
-            thicknessLayers (0.02);                  // this is one 2cm layer insulation
-            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
-            // see http://www.fao.org/3/y5013e/y5013e08.htm
-            // for the values of thernal insulation conductivity
-            kappaMethod     fluidThermo;
-            h               20;
-        }
-        shellend2
-        {
-            type            externalWallHeatFluxTemperature;
-            mode            coefficient;             // other modes are "power" and "flux"
-            Ta              uniform 293.15;          // ambient temperature in K
-            thicknessLayers (0.02);                  // this is one 2cm layer insulation
-            kappaLayers     (0.04);                  // typical insulation thernal conductivity is about this magnitude
-            // see http://www.fao.org/3/y5013e/y5013e08.htm
-            // for the values of thernal insulation conductivity
-            kappaMethod     fluidThermo;
-            h               20;
-        }
-        inletshell
-        {
-            type            zeroGradient;
-        }
-	outletshell
-        {
-            type            zeroGradient;
-        }
-	inlet
-        {
-            type            fixedValue;
-            value           uniform 293.15;
-        }
-	outlet
-        {
-            type            zeroGradient;
-        }
-        shell_to_copper
+        ".*"
         {
             type            compressible::turbulentTemperatureCoupledBaffleMixed;
             Tnbr            T;
             kappaMethod     fluidThermo;
             value           uniform 300;
+        }
+        tubeend2
+        {
+            type            fixedValue;
+            value           uniform 500;
+        }
+        tubeend1
+        {
+            type            zeroGradient;
         }
 	"procBoundary.*"
         {
@@ -147,12 +83,12 @@ epsilon
 
     boundaryField
     {
-        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        tube_to_copper
         {
             type            epsilonWallFunction;
             value           uniform 0.01;
         }
-	"(inlet|outlet)"
+	"(tubeend2|tubeend1)"
         {
             type            calculated;
             value           $internalField;
@@ -170,25 +106,25 @@ k
 
     boundaryField
     {
-        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        tube_to_copper
         {
             type            kqRWallFunction;
             value           uniform 0.1;
         }
-        inlet
+        tubeend2
         {
             type            turbulentIntensityKineticEnergyInlet;
-	    intensity       0.047;
+	    intensity       0.05;
             value           $internalField;
 	    // turbulent intensity can be estimated:
 	    // https://www.simscale.com/docs/simulation-setup/global-settings/k-epsilon/
 	    // Intensity = 0.16 * Re ^(-1/8)
 	    // Re = Reynold's number based on hydraulic mean diameter
         }
-	outlet
+	tubeend1
         {
             type            inletOutlet;
-            intensity       $internalField;
+            inletValue      $internalField;
             value           $internalField;
         }
         "procBoundary.*"
@@ -204,17 +140,17 @@ p_rgh
 
     boundaryField
     {
-        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        tube_to_copper
         {
             type            fixedFluxPressure;
             value           uniform 1e5;
         }
-        inletshell
+        tubeend2
         {
             type            fixedFluxPressure;
             value           $internalField;
         }
-        outletshell
+        tubeend1
         {
             type            fixedValue;
             value           uniform 1e5;
@@ -232,7 +168,7 @@ p
 
     boundaryField
     {
-        ".*"
+        tube_to_copper
         {
             type            calculated;
             value           uniform 1e5;
@@ -250,7 +186,7 @@ rho
 
     boundaryField
     {
-        ".*"
+        tube_to_copper
         {
             type            calculated;
             value           uniform 1000;
@@ -268,12 +204,12 @@ omega
 
     boundaryField
     {
-        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        tube_to_copper
         {
             type            omegaWallFunction;
             value           uniform 0.2;
         }
-        inlet
+        tubeend2
         {
             type            turbulentMixingLengthFrequencyInlet;
             mixingLength    0.007;
@@ -281,10 +217,10 @@ omega
 	    // mixing length = hydraulic dimater = 0.07
             value           $internalField;
         }
-        outlet
+        tubeend1
         {
             type            inletOutlet;
-            intensity       $internalField;
+            inletValue      $internalField;
             value           $internalField;
         }
         "procBoundary.*"
@@ -300,16 +236,16 @@ alphat
 
     boundaryField
     {
-        ".*"
-        {
-            type            calculated;
-            value           $internalField;
-        }
-	"(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+	tube_to_copper
         {
             type            compressible::alphatWallFunction;
 	    Prt             0.85;
             value           uniform 0;
+        }
+	"(tubeend2|tubeend1)"
+        {
+            type            calculated;
+            value           $internalField;
         }
         "procBoundary.*"
         {
@@ -324,15 +260,15 @@ nut
 
     boundaryField
     {
-        ".*"
-        {
-            type            calculated;
-            value           $internalField;
-        }
-        "(outershell|shellend1|shellend2|inletshell|outletshell|shell_to_copper)"
+        tube_to_copper
         {
             type            nutUWallFunction;
             value           uniform 0;
+        }
+	"(tubeend2|tubeend1)"
+        {
+            type            calculated;
+            value           $internalField;
         }
         "procBoundary.*"
         {

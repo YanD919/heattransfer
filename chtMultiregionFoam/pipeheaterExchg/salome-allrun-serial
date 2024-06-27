@@ -1,0 +1,29 @@
+#!/bin/bash
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+./Allclean
+
+ideasUnvToFoam pipeheaterExchg.unv
+transformPoints -scale 0.001
+splitMeshRegions -cellZones -overwrite
+restore0Dir
+
+# Remove fluid fields from solid regions (important for post-processing)
+for region in $(foamListRegions solid)
+do
+    rm -f 0/"$region"/{nut,alphat,epsilon,k,U,p_rgh,omega}
+    rm -f processor*/0/"$region"/{nut,alphat,epsilon,k,U,p_rgh,omega}
+done
+
+for region in $(foamListRegions)
+do
+    runApplication -s "$region" changeDictionary -region "$region"
+done
+
+
+# createPatch -overwrite
+# polyDualMesh 75 -overwrite
+touch pipeheaterExchg.foam
+#------------------------------------------------------------------------------
