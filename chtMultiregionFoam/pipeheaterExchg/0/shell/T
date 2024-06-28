@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "0/shell";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 0 0 1 0 0 0 ];
+
+internalField   uniform 300;
+
+boundaryField
+{
+    outershell
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 300;
+        mode            coefficient;
+        Ta              uniform 293.15;
+        thicknessLayers ( 0.02 );
+        kappaLayers     ( 0.04 );
+        kappaMethod     fluidThermo;
+        h               20;
+    }
+    shellend1
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 300;
+        mode            coefficient;
+        Ta              uniform 293.15;
+        thicknessLayers ( 0.02 );
+        kappaLayers     ( 0.04 );
+        kappaMethod     fluidThermo;
+        h               20;
+    }
+    shellend2
+    {
+        type            externalWallHeatFluxTemperature;
+        value           uniform 300;
+        mode            coefficient;
+        Ta              uniform 293.15;
+        thicknessLayers ( 0.02 );
+        kappaLayers     ( 0.04 );
+        kappaMethod     fluidThermo;
+        h               20;
+    }
+    inletshell
+    {
+        type            zeroGradient;
+        value           uniform 300;
+    }
+    outletshell
+    {
+        type            zeroGradient;
+        value           uniform 300;
+    }
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 293.15;
+    }
+    outlet
+    {
+        type            zeroGradient;
+        value           uniform 300;
+    }
+    shell_to_copper
+    {
+        type            compressible::turbulentTemperatureCoupledBaffleMixed;
+        value           uniform 300;
+        Tnbr            T;
+        kappaMethod     fluidThermo;
+    }
+}
+
+
+// ************************************************************************* //

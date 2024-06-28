@@ -1,0 +1,129 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c39a0f64-20231220 OPENFOAM=2312 version=2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : changeDictionary -region tube
+Date   : Jun 28 2024
+Time   : 16:47:20
+Host   : YanD
+PID    : 103669
+I/O    : uncollated
+Case   : /home/yand/OpenFOAM/yand-v2312/run/github/heattransfer/chtMultiregionFoam/pipeheaterExchg
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh tube for time = 0
+
+Read dictionary changeDictionaryDict with replacements for dictionaries 
+11
+(
+boundary
+U
+T
+epsilon
+k
+p_rgh
+p
+rho
+omega
+alphat
+nut
+)
+
+Reading polyMesh/boundary file to extract patch names
+Loaded dictionary boundary with entries 3(tubeend1 tubeend2 tube_to_copper)
+Extracted patch groups:
+    group wall with patches 1(tube_to_copper)
+Replacing entries in dictionary boundary
+Special handling of boundary as polyMesh/boundary file.
+Merging entries from 0()
+fieldDict:
+{
+    tubeend1
+    {
+        type            patch;
+        nFaces          65;
+        startFace       9091;
+    }
+    tubeend2
+    {
+        type            patch;
+        nFaces          69;
+        startFace       9156;
+    }
+    tube_to_copper
+    {
+        type            mappedWall;
+        inGroups        1 ( wall );
+        nFaces          2464;
+        startFace       9225;
+        sampleMode      nearestPatchFace;
+        sampleRegion    copper;
+        samplePatch     copper_to_tube;
+    }
+}
+
+Writing modified boundary
+Replacing entries in dictionary U
+Loading dictionary U
+Loaded dictionary U with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict U
+Replacing entries in dictionary T
+Loading dictionary T
+Loaded dictionary T with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict T
+Replacing entries in dictionary epsilon
+Loading dictionary epsilon
+Loaded dictionary epsilon with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict epsilon
+Replacing entries in dictionary k
+Loading dictionary k
+Loaded dictionary k with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict k
+Replacing entries in dictionary p_rgh
+Loading dictionary p_rgh
+Loaded dictionary p_rgh with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict p_rgh
+Replacing entries in dictionary p
+Loading dictionary p
+Loaded dictionary p with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict p
+Replacing entries in dictionary rho
+Loading dictionary rho
+Loaded dictionary rho with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict rho
+Replacing entries in dictionary omega
+Loading dictionary omega
+Loaded dictionary omega with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict omega
+Replacing entries in dictionary alphat
+Loading dictionary alphat
+Loaded dictionary alphat with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict alphat
+Replacing entries in dictionary nut
+Loading dictionary nut
+Loaded dictionary nut with entries 3(dimensions internalField boundaryField)
+Merging entries from 2(internalField boundaryField)
+Writing modified fieldDict nut
+
+End
+

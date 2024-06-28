@@ -7,8 +7,9 @@ cd "${0%/*}" || exit                                # Run from this directory
 
 ideasUnvToFoam pipeheaterExchg.unv
 transformPoints -scale 0.001
-splitMeshRegions -cellZones -overwrite
 restore0Dir
+
+splitMeshRegions -cellZones -overwrite
 
 # Remove fluid fields from solid regions (important for post-processing)
 for region in $(foamListRegions solid)

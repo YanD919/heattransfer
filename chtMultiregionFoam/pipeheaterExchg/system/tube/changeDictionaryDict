@@ -24,7 +24,7 @@ U
 
     boundaryField
     {
-	tube_to_copper
+	".*"
         {
             type            noSlip;
         }    
@@ -83,7 +83,7 @@ epsilon
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            epsilonWallFunction;
             value           uniform 0.01;
@@ -106,7 +106,7 @@ k
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            kqRWallFunction;
             value           uniform 0.1;
@@ -140,7 +140,7 @@ p_rgh
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            fixedFluxPressure;
             value           uniform 1e5;
@@ -168,7 +168,7 @@ p
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            calculated;
             value           uniform 1e5;
@@ -186,7 +186,7 @@ rho
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            calculated;
             value           uniform 1000;
@@ -204,7 +204,7 @@ omega
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            omegaWallFunction;
             value           uniform 0.2;
@@ -236,7 +236,7 @@ alphat
 
     boundaryField
     {
-	tube_to_copper
+        ".*"	
         {
             type            compressible::alphatWallFunction;
 	    Prt             0.85;
@@ -260,7 +260,7 @@ nut
 
     boundaryField
     {
-        tube_to_copper
+        ".*"
         {
             type            nutUWallFunction;
             value           uniform 0;

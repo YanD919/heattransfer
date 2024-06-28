@@ -281,7 +281,7 @@ omega
             type            turbulentMixingLengthFrequencyInlet;
             mixingLength    0.007;
 	    // mixing length estimated here : https://www.simscale.com/docs/simulation-setup/global-settings/k-epsilon/
-	    // mixing length = hydraulic dimater = 0.07
+	    // mixing length = hydraulic dimater * 0.07
             value           $internalField;
         }
         outlet

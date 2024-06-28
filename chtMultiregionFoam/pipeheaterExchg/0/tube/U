@@ -1,0 +1,45 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volVectorField;
+    location    "0/tube";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 1 -1 0 0 0 0 ];
+
+internalField   uniform ( 0 0 0 );
+
+boundaryField
+{
+    tubeend1
+    {
+        type            zeroGradient;
+        value           uniform ( 0.01 0 0 );
+    }
+    tubeend2
+    {
+        type            flowRateInletVelocity;
+        value           $internalField;
+        volumetricFlowRate constant 0.00022;
+        extrapolateProfile false;
+    }
+    tube_to_copper
+    {
+        type            noSlip;
+        value           uniform ( 0 0 0 );
+    }
+}
+
+
+// ************************************************************************* //

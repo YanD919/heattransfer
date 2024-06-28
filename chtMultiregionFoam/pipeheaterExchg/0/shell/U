@@ -1,0 +1,70 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volVectorField;
+    location    "0/shell";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 0 1 -1 0 0 0 0 ];
+
+internalField   uniform ( 0 0 0 );
+
+boundaryField
+{
+    outershell
+    {
+        type            noSlip;
+        value           uniform ( 0.01 0 0 );
+    }
+    shellend1
+    {
+        type            noSlip;
+        value           uniform ( 0.01 0 0 );
+    }
+    shellend2
+    {
+        type            noSlip;
+        value           uniform ( 0.01 0 0 );
+    }
+    inletshell
+    {
+        type            noSlip;
+        value           uniform ( 0.01 0 0 );
+    }
+    outletshell
+    {
+        type            noSlip;
+        value           uniform ( 0.01 0 0 );
+    }
+    inlet
+    {
+        type            flowRateInletVelocity;
+        value           $internalField;
+        volumetricFlowRate constant 0.00022;
+        extrapolateProfile false;
+    }
+    outlet
+    {
+        type            zeroGradient;
+        value           uniform ( 0.01 0 0 );
+    }
+    shell_to_copper
+    {
+        type            noSlip;
+        value           uniform ( 0 0 0 );
+    }
+}
+
+
+// ************************************************************************* //

@@ -47,7 +47,7 @@ solvers
         relTol           0.1;
     }
 
-    "(U|h|k|epsilon|R)Final"
+    "(U|h|k|epsilon|omega|R)Final"
     {
         $U;
         tolerance        1e-05;
@@ -58,18 +58,46 @@ solvers
 PIMPLE
 {
     momentumPredictor   yes;
-    nCorrectors         2;
-    nNonOrthogonalCorrectors 0;
+    nCorrectors         3;
+    nNonOrthogonalCorrectors 1;
     pRefCell    0;
     pRefValue   1e5;
+    nOuterCorrector 1000;
+
+    residualControl
+    {
+        U
+        {
+                tolerance  1e-9;
+                relTol      0;
+        }
+        p
+        {
+                tolerance  1e-9;
+                relTol      0;
+        }
+
+ 	h
+	{
+		tolerance 1e-9;
+		relTol	  0;
+	}
+    }
+
 }
 
 relaxationFactors
 {
+    fields
+    {
+        p      0.4;
+        pFinal   0.4;
+    }
     equations
     {
-        "h.*"           1;
-        "U.*"           1;
+        "h.*"           0.4;
+        "U.*"           0.4;
+        ".*"            0.3;
     }
 }
 
