@@ -35,7 +35,7 @@ boundaryField
     inlet
     {
         type            turbulentIntensityKineticEnergyInlet;
-        intensity       0.047;
+        intensity       0.05;
         value           $internalField;
         // turbulent intensity can be estimated:
         // https://www.simscale.com/docs/simulation-setup/global-settings/k-epsilon/

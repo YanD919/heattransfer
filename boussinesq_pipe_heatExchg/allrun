@@ -9,5 +9,6 @@ runApplication blockMesh
 restore0Dir
 
 touch pipeheaterExchg.foam
+buoyantBoussinesqPimpleFoam
 #runApplication $(getApplication)
 #------------------------------------------------------------------------------
