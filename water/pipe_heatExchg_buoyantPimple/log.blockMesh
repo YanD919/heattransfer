@@ -1,0 +1,80 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c39a0f64-20231220 OPENFOAM=2312 version=2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : blockMesh
+Date   : Jul 12 2024
+Time   : 16:55:13
+Host   : YanD
+PID    : 214986
+I/O    : uncollated
+Case   : /home/yand/OpenFOAM/yand-v2312/run/github/heattransfer/water/pipe_heatExchg_buoyantPimple
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+
+Creating topology patches - from boundary section
+
+Creating block mesh topology - scaling/transform applied later
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 0
+		Number of boundary faces : 6
+		Number of defined boundary faces : 6
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list (topological search)...
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale (0.01 0.01 0.01)
+    Block 0 cell size :
+        i : 0.00643057 .. 0.00643057
+        j : 0.00925967 .. 0.00925967
+        k : 0.02 .. 0.02
+
+Adding cell zones
+    0	cylinder
+No patch pairs to merge
+
+Writing polyMesh with 1 cellZones
+----------------
+Mesh Information
+----------------
+  boundingBox: (-0.05 -0.05 0) (0.05 0.05 4)
+  nPoints: 24321
+  nCells: 20000
+  nFaces: 64100
+  nInternalFaces: 55900
+----------------
+Cell Zones
+----------------
+  zone 0 (size: 20000) name: cylinder
+----------------
+Patches
+----------------
+  patch 0 (start: 55900 size: 100) name: inlet
+  patch 1 (start: 56000 size: 100) name: outlet
+  patch 2 (start: 56100 size: 8000) name: wall
+
+End
+

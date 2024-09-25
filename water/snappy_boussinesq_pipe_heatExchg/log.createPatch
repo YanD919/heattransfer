@@ -1,0 +1,98 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _c39a0f64-20231220 OPENFOAM=2312 version=2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : createPatch -overwrite
+Date   : Sep 25 2024
+Time   : 10:07:01
+Host   : YanD
+PID    : 196417
+I/O    : uncollated
+Case   : /home/yand/OpenFOAM/yand-v2312/run/github/heattransfer/water/snappy_boussinesq_pipe_heatExchg
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Reading "system/createPatchDict"
+
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching inlet
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching outlet
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching topAndBottom
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching wing
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching symFront
+--> FOAM Warning : 
+    From Foam::labelHashSet Foam::polyBoundaryMesh::patchSet(const Foam::UList<Foam::wordRe>&, bool, bool) const
+    in file meshes/polyMesh/polyBoundaryMesh/polyBoundaryMesh.C at line 1098
+    Cannot find any patch or group names matching symBack
+
+
+Adding patches to mesh region0
+
+Adding new patch outlet from 
+{
+    type            patch;
+    nFaces          0;
+    startFace       0;
+}
+
+Adding new patch wall from 
+{
+    type            wall;
+    nFaces          0;
+    startFace       0;
+}
+
+Adding new patch inlet from 
+{
+    type            patch;
+    nFaces          0;
+    startFace       0;
+}
+
+
+
+
+Repatching mesh region0
+
+Read 1768 faces from faceSet outlet
+Read 46048 faces from faceSet wall
+Read 1768 faces from faceSet inlet
+Doing topology modification to order faces.
+
+Not synchronising points.
+
+Removing patches with no faces in them.
+
+Removed zero-sized patch cylinder type wall at position 0
+
+
+Writing repatched mesh region0 to 0
+
+End
+
